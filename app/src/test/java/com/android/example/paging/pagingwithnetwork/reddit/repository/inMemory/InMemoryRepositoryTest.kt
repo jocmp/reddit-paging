@@ -22,13 +22,9 @@ import android.arch.paging.PagedList
 import com.android.example.paging.pagingwithnetwork.reddit.repository.Listing
 import com.android.example.paging.pagingwithnetwork.reddit.repository.NetworkState
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
-import com.android.example.paging.pagingwithnetwork.reddit.repository.inMemory.byItem.InMemoryByItemRepository
-import com.android.example.paging.pagingwithnetwork.reddit.repository.inMemory.byPage.InMemoryByPageKeyRepository
-import com.android.example.paging.pagingwithnetwork.reddit.vo.RedditPost
+import com.android.example.paging.pagingwithnetwork.reddit.model.RedditPost
 import com.android.example.paging.pagingwithnetwork.repository.FakeRedditApi
 import com.android.example.paging.pagingwithnetwork.repository.PostFactory
-import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository.Type.IN_MEMORY_BY_ITEM
-import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository.Type.IN_MEMORY_BY_PAGE
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat

@@ -18,8 +18,8 @@ package com.android.example.paging.pagingwithnetwork.reddit.repository
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
-import com.android.example.paging.pagingwithnetwork.reddit.api.RedditApi
-import com.android.example.paging.pagingwithnetwork.reddit.vo.RedditPost
+import com.android.example.paging.pagingwithnetwork.reddit.RedditApi
+import com.android.example.paging.pagingwithnetwork.reddit.model.RedditPost
 import java.util.concurrent.Executor
 
 /**

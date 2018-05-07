@@ -16,7 +16,7 @@
 
 package com.android.example.paging.pagingwithnetwork.repository
 
-import com.android.example.paging.pagingwithnetwork.reddit.vo.RedditPost
+import com.android.example.paging.pagingwithnetwork.reddit.model.RedditPost
 import java.util.concurrent.atomic.AtomicInteger
 
 class PostFactory {

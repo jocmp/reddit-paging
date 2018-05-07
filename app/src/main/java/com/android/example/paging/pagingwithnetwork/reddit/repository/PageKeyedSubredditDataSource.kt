@@ -18,24 +18,21 @@ package com.android.example.paging.pagingwithnetwork.reddit.repository
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
-import com.android.example.paging.pagingwithnetwork.reddit.api.RedditApi
-import com.android.example.paging.pagingwithnetwork.reddit.vo.RedditPost
+import com.android.example.paging.pagingwithnetwork.reddit.RedditApi
+import com.android.example.paging.pagingwithnetwork.reddit.model.RedditPost
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
 import java.util.concurrent.Executor
 
-class PageKeyedSubredditDataSource(private val redditApi: RedditApi, private val subredditName: String, private val retryExecutor: Executor) : PageKeyedDataSource<String, RedditPost>() {
-
-    // keep a function reference for the retry event
+class PageKeyedSubredditDataSource(
+        private val redditApi: RedditApi,
+        private val subredditName: String,
+        private val retryExecutor: Executor
+) : PageKeyedDataSource<String, RedditPost>() {
     private var retry: (() -> Any)? = null
 
-    /**
-     * There is no sync on the state because paging will always call loadInitial first then wait
-     * for it to return some success value before calling loadAfter.
-     */
     val networkState = MutableLiveData<NetworkState>()
-
     val initialLoad = MutableLiveData<NetworkState>()
 
     fun retryAllFailed() {
@@ -48,9 +45,7 @@ class PageKeyedSubredditDataSource(private val redditApi: RedditApi, private val
         }
     }
 
-    override fun loadBefore(
-            params: LoadParams<String>,
-            callback: LoadCallback<String, RedditPost>) {
+    override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, RedditPost>) {
         // ignored, since we only ever append to our initial load
     }
 
@@ -61,9 +56,7 @@ class PageKeyedSubredditDataSource(private val redditApi: RedditApi, private val
                 limit = params.requestedLoadSize).enqueue(
                 object : retrofit2.Callback<RedditApi.ListingResponse> {
                     override fun onFailure(call: Call<RedditApi.ListingResponse>, t: Throwable) {
-                        retry = {
-                            loadAfter(params, callback)
-                        }
+                        retry = { loadAfter(params, callback) }
                         networkState.postValue(NetworkState.error(t.message ?: "unknown err"))
                     }
 
@@ -77,11 +70,8 @@ class PageKeyedSubredditDataSource(private val redditApi: RedditApi, private val
                             callback.onResult(items, data?.after)
                             networkState.postValue(NetworkState.LOADED)
                         } else {
-                            retry = {
-                                loadAfter(params, callback)
-                            }
-                            networkState.postValue(
-                                    NetworkState.error("error code: ${response.code()}"))
+                            retry = { loadAfter(params, callback) }
+                            networkState.postValue(NetworkState.error("error code: ${response.code()}"))
                         }
                     }
                 }

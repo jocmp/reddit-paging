@@ -21,9 +21,7 @@ import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.v7.widget.RecyclerView
 import com.android.example.paging.pagingwithnetwork.R
-import com.android.example.paging.pagingwithnetwork.reddit.DefaultServiceLocator
-import com.android.example.paging.pagingwithnetwork.reddit.ServiceLocator
-import com.android.example.paging.pagingwithnetwork.reddit.api.RedditApi
+import com.android.example.paging.pagingwithnetwork.reddit.RedditApi
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
 import com.android.example.paging.pagingwithnetwork.reddit.ui.RedditActivity.Companion.DEFAULT_SUBREDDIT
 import com.android.example.paging.pagingwithnetwork.repository.FakeRedditApi

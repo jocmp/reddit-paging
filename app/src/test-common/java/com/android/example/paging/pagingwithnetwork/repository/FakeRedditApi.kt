@@ -16,8 +16,8 @@
 
 package com.android.example.paging.pagingwithnetwork.repository
 
-import com.android.example.paging.pagingwithnetwork.reddit.api.RedditApi
-import com.android.example.paging.pagingwithnetwork.reddit.vo.RedditPost
+import com.android.example.paging.pagingwithnetwork.reddit.RedditApi
+import com.android.example.paging.pagingwithnetwork.reddit.model.RedditPost
 import retrofit2.Call
 import retrofit2.mock.Calls
 import java.io.IOException
@@ -60,8 +60,7 @@ class FakeRedditApi : RedditApi {
         val after = items.lastOrNull()?.data?.name
         val response = RedditApi.ListingResponse(
                 RedditApi.ListingData(children = items,
-                        after = after,
-                        before = null
+                        after = after
                 )
         )
         return Calls.response(response)
@@ -78,8 +77,7 @@ class FakeRedditApi : RedditApi {
         val responseAfter = items.lastOrNull()?.data?.name
         val response = RedditApi.ListingResponse(
                 RedditApi.ListingData(children = items,
-                        after = responseAfter,
-                        before = null
+                        after = responseAfter
                 )
         )
         return Calls.response(response)

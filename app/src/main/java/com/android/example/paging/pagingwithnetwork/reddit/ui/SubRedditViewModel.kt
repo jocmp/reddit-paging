@@ -22,7 +22,7 @@ import android.arch.lifecycle.Transformations.switchMap
 import android.arch.lifecycle.ViewModel
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
 
-class SubRedditViewModel(private val repository: RedditPostRepository) : ViewModel() {
+class SubRedditViewModel(private val repository: RedditPostRepository = RedditPostRepository.instance) : ViewModel() {
     private val subredditName = MutableLiveData<String>()
     private val repoResult = map(subredditName, {
         repository.postsOfSubreddit(it, 30)
