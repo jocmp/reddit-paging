@@ -16,11 +16,8 @@
 
 package com.android.example.paging.pagingwithnetwork.reddit
 
-import android.app.Application
-import android.content.Context
 import android.support.annotation.VisibleForTesting
 import com.android.example.paging.pagingwithnetwork.reddit.api.RedditApi
-import com.android.example.paging.pagingwithnetwork.reddit.db.RedditDb
 import com.android.example.paging.pagingwithnetwork.reddit.repository.RedditPostRepository
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -29,12 +26,10 @@ interface ServiceLocator {
     companion object {
         private val LOCK = Any()
         private var instance: ServiceLocator? = null
-        fun instance(context: Context): ServiceLocator {
+        fun instance(): ServiceLocator {
             synchronized(LOCK) {
                 if (instance == null) {
-                    instance = DefaultServiceLocator(
-                            app = context.applicationContext as Application,
-                            useInMemoryDb = false)
+                    instance = DefaultServiceLocator()
                 }
                 return instance!!
             }
@@ -61,7 +56,7 @@ interface ServiceLocator {
 /**
  * default implementation of ServiceLocator that uses production endpoints.
  */
-open class DefaultServiceLocator(val app: Application, val useInMemoryDb: Boolean) : ServiceLocator {
+open class DefaultServiceLocator() : ServiceLocator {
     // thread pool used for disk access
     @Suppress("PrivatePropertyName")
     private val DISK_IO = Executors.newSingleThreadExecutor()
@@ -70,18 +65,12 @@ open class DefaultServiceLocator(val app: Application, val useInMemoryDb: Boolea
     @Suppress("PrivatePropertyName")
     private val NETWORK_IO = Executors.newFixedThreadPool(5)
 
-    private val db by lazy {
-        RedditDb.create(app, useInMemoryDb)
-    }
-
     private val api by lazy {
         RedditApi.create()
     }
 
     override fun getRepository(): RedditPostRepository {
-        return RedditPostRepository(
-                redditApi = getRedditApi(),
-                networkExecutor = getNetworkExecutor())
+        return RedditPostRepository(redditApi = getRedditApi(), networkExecutor = getNetworkExecutor())
     }
 
     override fun getNetworkExecutor(): Executor = NETWORK_IO

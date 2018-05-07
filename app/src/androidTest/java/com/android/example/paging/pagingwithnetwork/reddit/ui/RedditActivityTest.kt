@@ -60,8 +60,7 @@ class RedditActivityTest(private val type: RedditPostRepository.Type) {
         val app = InstrumentationRegistry.getTargetContext().applicationContext as Application
         // use a controlled service locator w/ fake API
         ServiceLocator.swap(
-                object : DefaultServiceLocator(app = app,
-                        useInMemoryDb = true) {
+                object : DefaultServiceLocator() {
                     override fun getRedditApi(): RedditApi = fakeApi
                 }
         )

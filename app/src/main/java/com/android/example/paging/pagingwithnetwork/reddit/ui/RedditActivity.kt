@@ -66,7 +66,7 @@ class RedditActivity : AppCompatActivity() {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 val repoTypeParam = intent.getIntExtra(KEY_REPOSITORY_TYPE, 0)
-                val repo = ServiceLocator.instance(this@RedditActivity).getRepository()
+                val repo = ServiceLocator.instance().getRepository()
                 @Suppress("UNCHECKED_CAST")
                 return SubRedditViewModel(repo) as T
             }
